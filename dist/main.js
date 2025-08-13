@@ -24,10 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Fetch and render sections
-  fetch('/api/profile').then(r => r.json()).then(renderAbout);
-  fetch('/api/skills').then(r => r.json()).then(renderSkills);
-  fetch('/api/projects').then(r => r.json()).then(renderProjects);
-  fetch('/api/contact').then(r => r.json()).then(renderContact);
+  fetch('/api/profile')
+    .then(r => r.json())
+    .then(renderAbout)
+    .catch(e => { console.error('Failed to load profile', e); });
+  fetch('/api/skills')
+    .then(r => r.json())
+    .then(renderSkills)
+    .catch(e => { console.error('Failed to load skills', e); });
+  fetch('/api/projects')
+    .then(r => r.json())
+    .then(renderProjects)
+    .catch(e => { console.error('Failed to load projects', e); });
+  fetch('/api/contact')
+    .then(r => r.json())
+    .then(renderContact)
+    .catch(e => { console.error('Failed to load contact', e); });
 });
 
 function animateSections() {

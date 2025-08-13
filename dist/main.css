@@ -84,6 +84,21 @@ body.dark {
   gap: 2rem;
   margin: 0;
   padding: 0;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 700px) {
+  .nav-links {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 .nav-links a {
   text-decoration: none;
