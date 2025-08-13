@@ -6,10 +6,9 @@
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
     "build": "tsc && npm run copy-assets",
-    "build:vercel": "tsc && cp -r public/* dist/",
     "start": "node dist/server.js",
-    "clean": "rimraf dist",
-    "copy-assets": "copyfiles -u 1 public/**/* dist/",
+    "clean": "shx rm -rf dist",
+    "copy-assets": "shx cp -r public/* dist/",
     "prebuild": "npm run clean",
     "postbuild": "npm run copy-assets"
   },
@@ -21,9 +20,8 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.30",
-    "copyfiles": "^2.4.1",
     "nodemon": "^3.0.2",
-    "rimraf": "^6.0.1",
+    "shx": "^0.3.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
