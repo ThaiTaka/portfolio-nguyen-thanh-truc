@@ -1,13 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Loader animation
-  setTimeout(() => {
-    document.getElementById('loader').style.opacity = 0;
-    setTimeout(() => {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('app').classList.remove('hidden');
+  // Loader animation using transitionend event for better reliability
+  const loader = document.getElementById('loader');
+  const app = document.getElementById('app');
+
+  function hideLoader() {
+    loader.style.opacity = 0;
+  }
+
+  loader.addEventListener('transitionend', () => {
+    if (loader.style.opacity === '0') {
+      loader.style.display = 'none';
+      app.classList.remove('hidden');
+      console.log('Loader hidden, app shown');
       animateSections();
-    }, 700);
-  }, 2200);
+    }
+  });
+
+  // Start fadeout after 2.2 seconds
+  setTimeout(hideLoader, 2200);
 
   // Theme toggle
   const themeToggle = document.getElementById('theme-toggle');
@@ -21,11 +31,26 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.add('dark');
   }
 
-  // Fetch and render sections
-  fetch('/api/profile').then(r => r.json()).then(renderAbout);
-  fetch('/api/skills').then(r => r.json()).then(renderSkills);
-  fetch('/api/projects').then(r => r.json()).then(renderProjects);
-  fetch('/api/contact').then(r => r.json()).then(renderContact);
+  // Fetch and render sections with error handling and logging
+  fetch('/api/profile')
+    .then(r => r.json())
+    .then(renderAbout)
+    .catch(err => console.error('Error fetching profile:', err));
+
+  fetch('/api/skills')
+    .then(r => r.json())
+    .then(renderSkills)
+    .catch(err => console.error('Error fetching skills:', err));
+
+  fetch('/api/projects')
+    .then(r => r.json())
+    .then(renderProjects)
+    .catch(err => console.error('Error fetching projects:', err));
+
+  fetch('/api/contact')
+    .then(r => r.json())
+    .then(renderContact)
+    .catch(err => console.error('Error fetching contact:', err));
 });
 
 function animateSections() {
