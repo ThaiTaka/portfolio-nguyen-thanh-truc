@@ -1,14 +1,16 @@
 {
-  "name": "nakimeweb",
+  "name": "portfolio-nguyen-thanh-truc",
   "version": "1.0.0",
   "description": "Portfolio giới thiệu bản thân Nguyễn Thanh Trúc với hiệu ứng animation đẹp, Express, TypeScript, chế độ sáng tối, tông màu hồng.",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/server.ts",
-    "clean": "rimraf dist",
-    "build": "npm run clean && tsc && npm run copy-assets",
-    "copy-assets": "copyfiles -u 1 public/**/* dist/",
-    "start": "node dist/server.js"
+    "clean": "node -e \"const fs = require('fs'); const path = require('path'); const distPath = path.join(__dirname, 'dist'); if (fs.existsSync(distPath)) { fs.rmSync(distPath, { recursive: true, force: true }); }\"",
+    "build": "npm run clean && npx tsc && npm run copy-assets",
+    "copy-assets": "node -e \"const fs = require('fs'); const path = require('path'); const src = path.join(__dirname, 'public'); const dest = path.join(__dirname, 'dist'); if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true }); fs.cpSync(src, dest, { recursive: true });\"",
+    "dev": "npx ts-node src/server.ts",
+    "start": "node dist/server.js",
+    "vercel-build": "npm run build",
+    "postinstall": "chmod +x ./node_modules/.bin/tsc || exit 0"
   },
   "author": "Nguyễn Thanh Trúc",
   "license": "MIT",
@@ -18,13 +20,7 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.30",
-    "copyfiles": "^2.4.1",
-    "nodemon": "^3.0.2",
-    "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
-  },
-  "engines": {
-    "node": ">=16.0.0"
   }
 }
