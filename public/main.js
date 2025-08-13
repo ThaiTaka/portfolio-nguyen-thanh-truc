@@ -1,5 +1,3 @@
-// main.js - Handles loading, theme, fetch, and animations
-
 document.addEventListener('DOMContentLoaded', () => {
   // Loader animation
   setTimeout(() => {
