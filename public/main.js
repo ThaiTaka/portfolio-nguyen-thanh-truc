@@ -1,3 +1,5 @@
+const API_BASE_URL = window.location.hostname === 'localhost' ? '' : 'https://your-production-api-base-url.com';
+
 document.addEventListener('DOMContentLoaded', () => {
   // Loader animation using transitionend event for better reliability
   const loader = document.getElementById('loader');
@@ -32,23 +34,35 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Fetch and render sections with error handling and logging
-  fetch('/api/profile')
-    .then(r => r.json())
+  fetch(\`\${API_BASE_URL}/api/profile\`)
+    .then(r => {
+      if (!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    })
     .then(renderAbout)
     .catch(err => console.error('Error fetching profile:', err));
 
-  fetch('/api/skills')
-    .then(r => r.json())
+  fetch(\`\${API_BASE_URL}/api/skills\`)
+    .then(r => {
+      if (!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    })
     .then(renderSkills)
     .catch(err => console.error('Error fetching skills:', err));
 
-  fetch('/api/projects')
-    .then(r => r.json())
+  fetch(\`\${API_BASE_URL}/api/projects\`)
+    .then(r => {
+      if (!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    })
     .then(renderProjects)
     .catch(err => console.error('Error fetching projects:', err));
 
-  fetch('/api/contact')
-    .then(r => r.json())
+  fetch(\`\${API_BASE_URL}/api/contact\`)
+    .then(r => {
+      if (!r.ok) throw new Error('Network response was not ok');
+      return r.json();
+    })
     .then(renderContact)
     .catch(err => console.error('Error fetching contact:', err));
 });
