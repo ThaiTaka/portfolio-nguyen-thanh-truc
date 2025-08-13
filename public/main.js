@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   loader.addEventListener('transitionend', () => {
     // Remove loader and show app regardless of opacity value
+    console.log('transitionend event fired');
     loader.style.display = 'none';
     app.classList.remove('hidden');
     console.log('Loader hidden, app shown');
@@ -21,11 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Start fadeout after 2.2 seconds
-  setTimeout(hideLoader, 2200);
+  setTimeout(() => {
+    console.log('Starting loader fadeout');
+    hideLoader();
+  }, 2200);
 
   // Fallback: forcibly hide loader and show app after 5 seconds if transitionend not fired
   setTimeout(() => {
     if (loader.style.display !== 'none') {
+      console.log('Fallback: forcibly hiding loader');
       loader.style.display = 'none';
       app.classList.remove('hidden');
       console.log('Loader forcibly hidden by fallback');
@@ -44,9 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeToggle.checked = true;
     document.body.classList.add('dark');
   }
-
-  // Fetch and render sections with error handling and logging
-  fetch(\`\${API_BASE_URL}/api/profile\`)
+  fetch(`${API_BASE_URL}/api/profile`)
     .then(r => {
       if (!r.ok) throw new Error('Network response was not ok');
       return r.json();
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(renderAbout)
     .catch(err => console.error('Error fetching profile:', err));
 
-  fetch(\`\${API_BASE_URL}/api/skills\`)
+  fetch(`${API_BASE_URL}/api/skills`)
     .then(r => {
       if (!r.ok) throw new Error('Network response was not ok');
       return r.json();
@@ -62,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(renderSkills)
     .catch(err => console.error('Error fetching skills:', err));
 
-  fetch(\`\${API_BASE_URL}/api/projects\`)
+  fetch(`${API_BASE_URL}/api/projects`)
     .then(r => {
       if (!r.ok) throw new Error('Network response was not ok');
       return r.json();
@@ -70,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(renderProjects)
     .catch(err => console.error('Error fetching projects:', err));
 
-  fetch(\`\${API_BASE_URL}/api/contact\`)
+  fetch(`${API_BASE_URL}/api/contact`)
     .then(r => {
       if (!r.ok) throw new Error('Network response was not ok');
       return r.json();
