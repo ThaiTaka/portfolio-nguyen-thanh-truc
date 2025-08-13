@@ -5,21 +5,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const loader = document.getElementById('loader');
   const app = document.getElementById('app');
 
+  // Ensure loader opacity is initially 1
+  loader.style.opacity = '1';
+
   function hideLoader() {
     loader.style.opacity = 0;
   }
 
   loader.addEventListener('transitionend', () => {
-    if (loader.style.opacity === '0') {
-      loader.style.display = 'none';
-      app.classList.remove('hidden');
-      console.log('Loader hidden, app shown');
-      animateSections();
-    }
+    // Remove loader and show app regardless of opacity value
+    loader.style.display = 'none';
+    app.classList.remove('hidden');
+    console.log('Loader hidden, app shown');
+    animateSections();
   });
 
   // Start fadeout after 2.2 seconds
   setTimeout(hideLoader, 2200);
+
+  // Fallback: forcibly hide loader and show app after 5 seconds if transitionend not fired
+  setTimeout(() => {
+    if (loader.style.display !== 'none') {
+      loader.style.display = 'none';
+      app.classList.remove('hidden');
+      console.log('Loader forcibly hidden by fallback');
+      animateSections();
+    }
+  }, 5000);
 
   // Theme toggle
   const themeToggle = document.getElementById('theme-toggle');
